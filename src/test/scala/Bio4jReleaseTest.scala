@@ -20,25 +20,26 @@ import com.ohnosequences.bio4j.titan.model.util._
 object TestBundles {
 
   def checkGorilla(nodeRetriever: NodeRetrieverTitan): InstallResults = {
-    lazy val gorilla = nodeRetriever.getNCBITaxonByTaxId("9595")
-    if(gorilla.getScientificName == "Gorilla gorilla gorilla")
-         success("ModuleTestBundle: Got Gorilla taxon by Tax ID")
-    else failure("ModuleTestBundle: Couldn't find Gorilla taxon!")
+    // TODO: write a better test
+    lazy val gorilla = nodeRetriever.getNCBITaxonByGiId("03")
+    if(gorilla.getScientificName == "")
+         success("")
+    else failure("")
   }
 
   case object TestBundle 
-    extends ReleaseBundle(NCBITaxonomyRelease.s3address, NCBITaxonomyRelease.module) {
+    extends ReleaseBundle(GITaxonomyIndexRelease.s3address, GITaxonomyIndexRelease.module) {
       override def install[D <: AnyDistribution](d: D): InstallResults = {
         checkGorilla(new NodeRetrieverTitan(
-            new Bio4jManager(NCBITaxonomyRelease.module.dbLocation.getAbsolutePath))) -&-
-        NCBITaxonomyRelease.install(d) -&-
-        NCBITaxonomyDistribution.install(d) -&-
-        checkGorilla(NCBITaxonomyDistribution.nodeRetriever)
+            new Bio4jManager(GITaxonomyIndexRelease.module.dbLocation.getAbsolutePath))) -&-
+        GITaxonomyIndexRelease.install(d) -&-
+        GITaxonomyIndexDistribution.install(d) -&-
+        checkGorilla(GITaxonomyIndexDistribution.nodeRetriever)
       }
   }
 
   case object TestApplicator extends AWSDistribution(
-    NCBITaxonomyMetadata,
+    GITaxonomyIndexMetadata,
     amzn_ami_pv_64bit(Region.Ireland)(javaHeap = 6),
     members = TestBundle :~: ∅
   )
