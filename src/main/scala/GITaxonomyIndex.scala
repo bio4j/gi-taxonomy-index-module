@@ -12,16 +12,6 @@ import ohnosequences.awstools.regions._
 import com.ohnosequences.bio4j.titan.programs._
 import java.io._
 
-/* This bundle is important, it doesn't really import anything, but initializes Bio4j */
-case object InitialBio4j extends Bundle() with AnyBio4jInstanceBundle {
-  val dbLocation: File = new File("/media/ephemeral0/bio4jtitandb")
-
-  override def install[D <: AnyDistribution](d: D): InstallResults = {
-    if (!dbLocation.exists) dbLocation.mkdirs
-    InitBio4jTitan.main(Array(dbLocation.getAbsolutePath))
-    success(s"Initialized Bio4j DB in ${dbLocation}")
-  }
-}
 
 case object GITaxonomyIndexRawData 
   extends RawDataBundle("ftp://ftp.ncbi.nih.gov/pub/taxonomy/gi_taxid_nucl.dmp.gz")

@@ -12,9 +12,8 @@ bucketSuffix := "era7.com"
 
 
 libraryDependencies ++= Seq(
-  // "bio4j" %% "modules" % "0.3.0",
-  "ohnosequences" %% "bio4j-scala-lib" % "0.2.0",
-  "ohnosequences" %% "bio4j-ncbi-taxonomy" % "0.1.0" classifier(""),
+  "bio4j" %% "modules" % "0.3.0-SNAPSHOT",
+  "bio4j" %% "ncbi-taxonomy-module" % "0.2.0-SNAPSHOT" classifier(""),
   "ohnosequences" %% "amazon-linux-ami" % "0.15.0",
   "ohnosequences" %% "aws-scala-tools" % "0.6.1",
   "ohnosequences" %% "statika-cli" % "0.17.0" % "test"
